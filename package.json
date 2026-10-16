@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "OpenCode TUI plugin: a tokens-per-second sparkline with current/average/max stats in the session sidebar footer.",
+  "description": "OpenCode TUI plugin: a sparkline in the session sidebar footer cycling through tokens-per-second and per-minute token usage views, with current/average/max stats.",
   "keywords": [
     "opencode",
     "opencode-plugin",
     "tui",
     "tokens-per-second",
+    "token-usage",
     "sparkline"
   ],
   "license": "MIT",

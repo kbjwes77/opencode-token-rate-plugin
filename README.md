@@ -126,29 +126,42 @@ matches whatever theme you use (dark or light):
 
 ## Install
 
-This is a **CLI-only** plugin, so it stays active even when the CLI is connected to a
-remote server. Clone the repo and point `~/.config/opencode/cli.json` at it:
+Install it globally with OpenCode's plugin manager:
 
-```json
-{
-  "$schema": "https://opencode.ai/v2/cli.json",
-  "plugins": ["/path/to/opencode-token-rate-plugin"]
-}
+```sh
+opencode plugin add github:kbjwes77/opencode-token-rate-plugin
 ```
 
-OpenCode resolves `@opencode/plugin/tui` at runtime, so there is no build step.
+This is a **CLI-only** plugin, so it stays active even when the CLI is connected to a
+remote server; the TUI component loads automatically in every project.
+
+### Why the TUI entry is precompiled
+
+OpenCode's packaged CLI does not run OpenTUI's Solid JSX transform on files under
+`node_modules`, so a raw `tui.tsx` entry fails to load from a plugin install with
+`Cannot find package 'react'` (see
+[opencode#39986](https://github.com/anomalyco/opencode/issues/39986)). The `./tui`
+entrypoint is therefore `tui.js`, precompiled with `babel-preset-solid`
+(`moduleName: "@opentui/solid"`, `generate: "universal"`), which emits explicit
+imports the host bridges to its own runtime singletons. `tui.js` is committed to
+the repo so git and npm installs ship it directly, and the `files` field keeps the
+raw `tui.tsx` out of published installs. Pointing `cli.json` at a raw clone only
+works once OpenCode fixes #39986, because the loader resolves `tui.tsx` before
+`tui.js`.
 
 ## Development
 
 ```sh
 npm install
+npm run build          # compile tui.tsx -> tui.js (the ./tui entrypoint)
 npm run typecheck      # tsc --noEmit
 npm run check          # event -> tok/s and per-minute usage data path, with a fake context
 npm run check:render   # renders the footer with the real OpenTUI test renderer (toggle click + hover)
 ```
 
-`tui.tsx` and `server.ts` live at the package root because the plugin loader resolves a
-configured spec as `<spec>/tui` and `<spec>/server`.
+After editing `tui.tsx`, rebuild and commit the regenerated `tui.js`. `server.ts`
+and the compiled `tui.js` live at the package root because the plugin loader
+resolves a configured spec as `<spec>/tui` and `<spec>/server`.
 
 ## License
 

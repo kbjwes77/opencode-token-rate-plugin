@@ -1,6 +1,6 @@
 {
   "name": "opencode-token-rate-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "OpenCode TUI plugin: a sparkline in the session sidebar footer cycling through tokens-per-second and per-minute token usage views, with current/average/max stats.",
@@ -18,11 +18,17 @@
     "type": "git",
     "url": "git+https://github.com/kbjwes77/opencode-token-rate-plugin.git"
   },
+  "files": [
+    "src",
+    "server.ts",
+    "tui.js"
+  ],
   "exports": {
     ".": "./server.ts",
-    "./tui": "./tui.tsx"
+    "./tui": "./tui.js"
   },
   "scripts": {
+    "build": "bun scripts/build-tui.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check": "bun run -r ./scripts/preload.ts ./scripts/check.ts",
     "check:render": "bun run -r ./scripts/preload.ts --conditions=browser ./scripts/render.tsx"
@@ -47,10 +53,14 @@
     }
   },
   "devDependencies": {
+    "@babel/core": "^8.0.9",
+    "@babel/plugin-syntax-jsx": "^8.0.1",
+    "@babel/preset-typescript": "^8.0.7",
     "@opencode/theme": "2.0.31",
     "@opentui/core": "0.5.17",
     "@opentui/solid": "0.5.17",
     "@types/node": "^24.19.2",
+    "babel-preset-solid": "^1.9.16",
     "solid-js": "1.9.12",
     "typescript": "5.8.2"
   }

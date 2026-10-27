@@ -28,7 +28,7 @@
     "./tui": "./tui.js"
   },
   "scripts": {
-    "build": "bun scripts/build-tui.mjs",
+    "build:tui": "bun scripts/build-tui.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "check": "bun run -r ./scripts/preload.ts ./scripts/check.ts",
     "check:render": "bun run -r ./scripts/preload.ts --conditions=browser ./scripts/render.tsx"

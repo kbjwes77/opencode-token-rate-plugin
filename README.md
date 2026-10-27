@@ -153,7 +153,7 @@ works once OpenCode fixes #39986, because the loader resolves `tui.tsx` before
 
 ```sh
 npm install
-npm run build          # compile tui.tsx -> tui.js (the ./tui entrypoint)
+npm run build:tui      # compile tui.tsx -> tui.js (the ./tui entrypoint)
 npm run typecheck      # tsc --noEmit
 npm run check          # event -> tok/s and per-minute usage data path, with a fake context
 npm run check:render   # renders the footer with the real OpenTUI test renderer (toggle click + hover)
